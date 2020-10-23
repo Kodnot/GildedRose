@@ -1,4 +1,4 @@
-﻿using System;
+﻿using GildedRose.Items;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,20 +6,29 @@ namespace GildedRose
 {
     public class GildedRose
     {
-        private IList<Item> items_old;
+        private IList<Item> Items; // NOTE: If I was allowed to, I'd rename this to ~legacyItems
 
-        public readonly IList<GenericItem> Items;
+        private IList<GenericItem> genericItems;
 
         public GildedRose(IList<Item> Items)
         {
-            this.items_old = Items;
-            // I'm not sure if I'm allowed to do this - this isn't modifying Item class or Items property, so it should be fine.
-            // If need be, I could also map the changes to the old items list after every update, making the refactoring completely transparent from the perspective of Program.cs
-            this.Items = items_old.Select(x => ConvertItem(x)).ToList();
+            this.Items = Items;
+            this.genericItems = Items.Select(x => ConvertItem(x)).ToList();
+        }
+
+        public void UpdateQuality()
+        {
+            foreach (var item in genericItems)
+            {
+                item.Age();
+            }
+            MapUpdatesToLegacyItems();
         }
 
         private GenericItem ConvertItem(Item oldItem)
         {
+            // NOTE: From the old implementation, I assumed that the sample Items contain all the possible exact names. 
+            // If that is not the case, some pattern maching should be added (Does name start with / contain Backstage, maybe case insensitive / fuzzy matching etc)
             switch (oldItem.Name)
             {
                 case "Aged Brie":
@@ -33,94 +42,12 @@ namespace GildedRose
             }
         }
 
-        public void UpdateQuality()
+        private void MapUpdatesToLegacyItems()
         {
-            //foreach (var item in items_old)
-            //{
-            //    UpdateItem(item);
-            //}
-            foreach (var item in Items)
+            for (int i = 0; i < Items.Count; ++i)
             {
-                item.Age();
-            }
-        }
-
-        private void UpdateDefaultItem(Item item)
-        {
-            item.Quality = Math.Max(item.Quality - 1, 0);
-            item.SellIn -= 1;
-        }
-
-        public void UpdateItem(Item item)
-        {
-            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
-            {
-                if (item.Quality > 0)
-                {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
-                }
-            }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-
-                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.SellIn < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-
-                        if (item.SellIn < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
-            {
-                item.SellIn = item.SellIn - 1;
-            }
-
-            if (item.SellIn < 0)
-            {
-                if (item.Name != "Aged Brie")
-                {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.Quality > 0)
-                        {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Quality = item.Quality - item.Quality;
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
+                Items[i].Quality = genericItems[i].Quality;
+                Items[i].SellIn = genericItems[i].SellIn;
             }
         }
     }

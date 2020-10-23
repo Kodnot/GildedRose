@@ -1,4 +1,4 @@
-﻿namespace GildedRose
+﻿namespace GildedRose.Items
 {
     class Sulfuras : GenericItem
     {
@@ -14,7 +14,7 @@
         public override int SellIn
         {
             get => initialSellIn;
-            set
+            protected set
             {
                 // Do nothing. Sulfuras never has to be sold.
             }
@@ -22,7 +22,8 @@
 
         public override int Quality
         {
-            get => initialQuality; set
+            get => initialQuality; 
+            protected set
             {
                 // Do nothing, the quality of Sulfuras never changes.TODO: Maybe there is a better way to do this, this approach seems a bit shady
             }

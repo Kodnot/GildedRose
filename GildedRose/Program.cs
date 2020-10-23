@@ -39,17 +39,14 @@ namespace GildedRose
 
             var app = new GildedRose(Items);
 
-            // TODO: Return the items in some better way, maybe an IEnumerable?
-            var tmpItems = app.Items;
-
 
             for (var i = 0; i < 31; i++)
             {
                 Console.WriteLine("-------- day " + i + " --------");
                 Console.WriteLine("name, sellIn, quality");
-                for (var j = 0; j < tmpItems.Count; j++)
+                for (var j = 0; j < Items.Count; j++)
                 {
-                    System.Console.WriteLine(tmpItems[j].Name + ", " + tmpItems[j].SellIn + ", " + tmpItems[j].Quality);
+                    System.Console.WriteLine(Items[j].Name + ", " + Items[j].SellIn + ", " + Items[j].Quality);
                 }
                 Console.WriteLine("");
                 app.UpdateQuality();

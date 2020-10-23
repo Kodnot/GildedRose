@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace GildedRose
+namespace GildedRose.Items
 {
     public class GenericItem
     {
         private int quality;
 
-        public string Name { get; protected set; }
-        public virtual int SellIn { get; set; }
-        public virtual int Quality { get => quality; set => quality = Math.Max(0, Math.Min(value, 50)); }
+        public string Name { get; }
+        public virtual int SellIn { get; protected set; }
+        public virtual int Quality { get => quality; protected set => quality = Math.Max(0, Math.Min(value, 50)); }
 
         protected int DegradationRate { get; set; }
 
