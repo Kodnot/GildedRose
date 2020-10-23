@@ -39,6 +39,8 @@ namespace GildedRose
                     return new BackstagePass(oldItem.Name, oldItem.SellIn, oldItem.Quality);
                 case "Sulfuras, Hand of Ragnaros":
                     return new Sulfuras(oldItem.Name, oldItem.SellIn, oldItem.Quality);
+                case "Conjured Mana Cake":
+                    return new ConjuredItem(oldItem.Name, oldItem.SellIn, oldItem.Quality);
                 default:
                     return new GenericItem(oldItem.Name, oldItem.SellIn, oldItem.Quality);
             }
