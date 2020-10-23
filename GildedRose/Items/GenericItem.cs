@@ -10,7 +10,7 @@ namespace GildedRose.Items
         public virtual int SellIn { get; protected set; }
         public virtual int Quality { get => quality; protected set => quality = Math.Max(0, Math.Min(value, 50)); }
 
-        protected int DegradationRate { get; set; }
+        public int DegradationRate { get; protected set; }
 
         public GenericItem(string name, int sellIn, int quality)
         {
