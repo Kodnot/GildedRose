@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GildedRose
 {
@@ -24,7 +22,7 @@ namespace GildedRose
 
         public virtual void Age()
         {
-            Quality -= SellIn < 0 ? DegradationRate * 2 : DegradationRate;
+            Quality -= SellIn <= 0 ? DegradationRate * 2 : DegradationRate;
             SellIn -= 1;
         }
     }

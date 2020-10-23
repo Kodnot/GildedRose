@@ -1,21 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GildedRose
+﻿namespace GildedRose
 {
     class Sulfuras : GenericItem
     {
+        private int initialSellIn;
+        private int initialQuality;
+
         public Sulfuras(string name, int sellIn, int quality) : base(name, sellIn, quality)
         {
+            initialSellIn = sellIn;
+            initialQuality = quality;
         }
 
         public override int SellIn
         {
-            get => base.SellIn; 
+            get => initialSellIn;
             set
             {
-                // Do nothing, the quality of Sulfuras never changes. TODO: Maybe there is a better way to do this, this approach seems a bit shady
+                // Do nothing. Sulfuras never has to be sold.
+            }
+        }
+
+        public override int Quality
+        {
+            get => initialQuality; set
+            {
+                // Do nothing, the quality of Sulfuras never changes.TODO: Maybe there is a better way to do this, this approach seems a bit shady
             }
         }
     }
