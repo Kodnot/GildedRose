@@ -6,24 +6,24 @@ namespace GildedRose
 {
     public class GildedRose
     {
-        private IList<Item> Items; // NOTE: If I was allowed to, I'd rename this to ~legacyItems
-
-        private IList<GenericItem> genericItems;
+        private IList<Item> Items;
 
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
-            this.genericItems = Items.Select(x => ConvertItem(x)).ToList();
         }
 
         public void UpdateQuality()
         {
+            // NOTE: If the list of items was huge, this approach may not be viable due to performance concerns, but performance testing would be needed to check whether that's a problem we need to worry about
+            // The sample program does not add new items to the list, but it would make sense if that was a required option. If it is, I need to re-initialize the converted item list every time in case Items has changed.
+            // Could also cache the list and only update it if it has actually changed for performance improvements
+            var genericItems = Items.Select(x => ConvertItem(x)).ToList();
             foreach (var item in genericItems)
             {
                 item.Age();
             }
-            // NOTE: If the list of items was huge, this approach may not be viable due to performance concerns, but performance testing would be needed to check whether that's a problem we need to worry about
-            MapUpdatesToLegacyItems();
+            MapUpdatesToLegacyItems(genericItems);
         }
 
         private GenericItem ConvertItem(Item oldItem)
@@ -46,7 +46,7 @@ namespace GildedRose
             }
         }
 
-        private void MapUpdatesToLegacyItems()
+        private void MapUpdatesToLegacyItems(IList<GenericItem> genericItems)
         {
             for (int i = 0; i < Items.Count; ++i)
             {

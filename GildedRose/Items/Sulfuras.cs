@@ -25,7 +25,8 @@
             get => initialQuality; 
             protected set
             {
-                // Do nothing, the quality of Sulfuras never changes.TODO: Maybe there is a better way to do this, this approach seems a bit shady
+                // Do nothing, the quality of Sulfuras never changes. TODO: Maybe there is a better way to do this, this approach seems a bit shady
+                // NOTE: Normally, I'd discuss whether an approach I'm not certain about is acceptable during a code review
             }
         }
     }

@@ -11,7 +11,6 @@
         {
             if (SellIn <= 0)
             {
-                // TODO: Maybe find a better approach, no need to set the props to 0 every time after SellIn < 0
                 DegradationRate = 0;
                 Quality = 0;
             }
