@@ -29,6 +29,7 @@ namespace GildedRose
         {
             // NOTE: From the old implementation, I assumed that the sample Items contain all the possible exact names. 
             // If that is not the case, some pattern maching should be added (Does name start with / contain Backstage, maybe case insensitive / fuzzy matching etc)
+            // Also, there could be some validation for whether the name passed to ctor actually fits the class type
             switch (oldItem.Name)
             {
                 case "Aged Brie":

@@ -33,6 +33,18 @@ namespace GildedRose.Tests.Items.Tests
             item.Quality.ShouldBe(initialQuality - 1);
         }
 
+        [Fact]
+        public void Age_WhenQualityIsZero_ShouldNotDecreaseQuality()
+        {
+            // Arrange
+            var initialQuality = 0;
+            var item = new GenericItem("", 10, initialQuality);
+            // Act
+            item.Age();
+            // Assert
+            item.Quality.ShouldBe(initialQuality);
+        }
+
         [Theory]
         [InlineData(0)]
         [InlineData(-4)]
@@ -48,15 +60,18 @@ namespace GildedRose.Tests.Items.Tests
         }
 
 
-        [Fact]
-        public void Age_WhenCalled_ShouldDecreaseSellInByOne()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(3)]
+        public void Age_WhenCalled_ShouldDecreaseSellInByOne(int sellIn)
         {
             // Arrange
-            var item = new GenericItem("", 10, 0);
+            var item = new GenericItem("", sellIn, 0);
             // Act
             item.Age();
             // Assert
-            item.SellIn.ShouldBe(9);
+            item.SellIn.ShouldBe(sellIn - 1);
         }
     }
 }
