@@ -18,5 +18,44 @@ namespace GildedRose.Tests.Items.Tests
             item.Quality.ShouldBe(quality);
             item.DegradationRate.ShouldBe(-1);
         }
+
+        [Theory]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Age_WhenSellInIsPositive_ShouldIncreaseQualityByOne(int sellIn)
+        {
+            // Arrange
+            var initialQuality = 10;
+            var item = new AgedBrie("", sellIn, initialQuality);
+            // Act
+            item.Age();
+            // Assert
+            item.Quality.ShouldBe(initialQuality + 1);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-2)]
+        public void Age_WhenSellInIsNegativeOrZero_ShouldIncreaseQualityByTwo(int sellIn)
+        {
+            // Arrange
+            var initialQuality = 10;
+            var item = new AgedBrie("", sellIn, initialQuality);
+            // Act
+            item.Age();
+            // Assert
+            item.Quality.ShouldBe(initialQuality + 2);
+        }
+
+        [Fact]
+        public void Age_WhenQualityIsFifty_ShouldNotIncreaseQuality()
+        {
+            // Arrange
+            var item = new AgedBrie("", 4, 50);
+            // Act
+            item.Age();
+            // Assert
+            item.Quality.ShouldBe(50);
+        }
     }
 }
