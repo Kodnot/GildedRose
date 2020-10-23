@@ -22,6 +22,7 @@ namespace GildedRose
             {
                 item.Age();
             }
+            // NOTE: If the list of items was huge, this approach may not be viable due to performance concerns, but performance testing would be needed to check whether that's a problem we need to worry about
             MapUpdatesToLegacyItems();
         }
 
